@@ -1,6 +1,7 @@
-# Tested and adapted for Openshift Cluster 4.10, new API, versions, etc.
-
-
+# Tested and adapted for Openshift Cluster 4.10, new API versions, etc.
+Mostly based on 
+https://github.com/redhat-nfvpe/k8s-dummy-device-plugin
+*************
 
 # k8s-dummy-device-plugin
 
