@@ -9,10 +9,10 @@
     },
     {
         "name": "dev_3",
-        "state": "Up"
+        "state": "Down"
     },
     {
         "name": "dev_4",
-        "state": "Up"
+        "state": "Down"
     }
 ]

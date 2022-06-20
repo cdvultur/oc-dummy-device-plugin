@@ -1,19 +1,18 @@
 # Builder phase.
-FROM golang:1.10 AS builder
-MAINTAINER dosmith@redhat.com
-ENV build_date 2018-04-12
+FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.17-openshift-4.10 AS builder
+MAINTAINER enriquebelarte@redhat.com
 ENV GOPATH /usr/
 RUN mkdir -p /usr/src/
 WORKDIR /usr/src/
-RUN git clone https://github.com/redhat-nfvpe/k8s-dummy-device-plugin.git
-WORKDIR /usr/src/k8s-dummy-device-plugin
-# RUN go build dummy.go
-RUN CGO_ENABLED=0 go build -a -o k8s-dummy-device-plugin dummy.go
+RUN git clone https://github.com/enriquebelarte/oc-dummy-device-plugin.git
+WORKDIR /usr/src/oc-dummy-device-plugin
+RUN go mod init && go mod tidy && go mod vendor 
+RUN CGO_ENABLED=0 go build -a -o oc-dummy-device-plugin dummy.go
 
 # Copy phase
 FROM alpine:latest
 # If you need to debug, add bash.
 # RUN apk add --no-cache bash
-COPY --from=builder /usr/src/k8s-dummy-device-plugin/k8s-dummy-device-plugin /k8s-dummy-device-plugin
-COPY --from=builder /usr/src/k8s-dummy-device-plugin/dummyResources.json /dummyResources.json
-ENTRYPOINT ["/k8s-dummy-device-plugin"]
+COPY --from=builder /usr/src/oc-dummy-device-plugin/oc-dummy-device-plugin /oc-dummy-device-plugin
+COPY --from=builder /usr/src/oc-dummy-device-plugin/dummyResources.json /dummyResources.json
+ENTRYPOINT ["/oc-dummy-device-plugin"]
