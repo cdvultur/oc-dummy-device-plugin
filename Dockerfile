@@ -4,7 +4,7 @@ MAINTAINER enriquebelarte@redhat.com
 ENV GOPATH /usr/
 RUN mkdir -p /usr/src/
 WORKDIR /usr/src/
-RUN git clone https://github.com/enriquebelarte/oc-dummy-device-plugin.git
+RUN git clone https://github.com/cdvultur/oc-dummy-device-plugin.git
 WORKDIR /usr/src/oc-dummy-device-plugin
 RUN go mod init && go mod tidy && go mod vendor 
 RUN CGO_ENABLED=0 go build -a -o oc-dummy-device-plugin dummy.go
